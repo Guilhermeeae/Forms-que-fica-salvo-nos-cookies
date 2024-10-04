@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gerenciamento de Solicitações</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="date"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Gerenciamento de Solicitações</h1>
+        <form id="solicitacaoForm">
+            <h2>Cadastro da Solicitação</h2>
+            <div class="form-group">
+                <label for="nome">Nome do Solicitante:</label>
+                <input type="text" id="nome" required>
+            </div>
+            <div class="form-group">
+                <label for="cargo">Cargo do Solicitante:</label>
+                <input type="text" id="cargo" required>
+            </div>
+            <div class="form-group">
+                <label for="empresa">Nome da Empresa:</label>
+                <input type="text" id="empresa" required>
+            </div>
+            <div class="form-group">
+                <label for="cnpj">CNPJ:</label>
+                <input type="text" id="cnpj" required>
+            </div>
+            <div class="form-group">
+                <label for="setor">Setor/Área de Solicitação:</label>
+                <input type="text" id="setor" required>
+            </div>
+            <div class="form-group">
+                <label for="telefone">Telefone de Contato:</label>
+                <input type="tel" id="telefone" required>
+            </div>
+            <div class="form-group">
+                <label for="email">E-mail do Solicitante:</label>
+                <input type="email" id="email" required>
+            </div>
+            <div class="form-group">
+                <label for="data">Data da Solicitação:</label>
+                <input type="date" id="data" required>
+            </div>
+            <div class="form-group">
+                <label for="urgencia">Urgência da Solicitação:</label>
+                <select id="urgencia" required>
+                    <option value="baixa">Baixa</option>
+                    <option value="media">Média</option>
+                    <option value="alta">Alta</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="observacoes">Observações Adicionais:</label>
+                <textarea id="observacoes" rows="4"></textarea>
+            </div>
+
+            <h2>Informações sobre a Queixa</h2>
+            <div class="form-group">
+                <label for="problema">Problema Principal:</label>
+                <textarea id="problema" rows="2" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="descricao">Descrição Detalhada:</label>
+                <textarea id="descricao" rows="4" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="impacto">Impacto do Problema:</label>
+                <textarea id="impacto" rows="2" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="outrosProblemas">Outros Problemas Relacionados:</label>
+                <textarea id="outrosProblemas" rows="2"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="arquivos">Arquivos para Análise:</label>
+                <input type="file" id="arquivos">
+            </div>
+            <div class="form-group">
+                <label for="pergunta">Pergunta Opcional:</label>
+                <textarea id="pergunta" rows="2"></textarea>
+            </div>
+
+            <button type="submit">Enviar Solicitação</button>
+        </form>
+        <button id="verRespostas">Ver Respostas</button>
+    </div>
+
+    <script>
+        const solicitacaoForm = document.getElementById('solicitacaoForm');
+        const verRespostasButton = document.getElementById('verRespostas');
+        const solicitacoes = JSON.parse(localStorage.getItem('solicitacoes')) || [];
+
+        solicitacaoForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const novaSolicitacao = {
+                nome: document.getElementById('nome').value,
+                cargo: document.getElementById('cargo').value,
+                empresa: document.getElementById('empresa').value,
+                cnpj: document.getElementById('cnpj').value,
+                setor: document.getElementById('setor').value,
+                telefone: document.getElementById('telefone').value,
+                email: document.getElementById('email').value,
+                data: document.getElementById('data').value,
+                urgencia: document.getElementById('urgencia').value,
+                observacoes: document.getElementById('observacoes').value,
+                problema: document.getElementById('problema').value,
+                descricao: document.getElementById('descricao').value,
+                impacto: document.getElementById('impacto').value,
+                outrosProblemas: document.getElementById('outrosProblemas').value,
+                pergunta: document.getElementById('pergunta').value
+            };
+
+            solicitacoes.push(novaSolicitacao);
+            localStorage.setItem('solicitacoes', JSON.stringify(solicitacoes));
+
+            alert('Solicitação enviada com sucesso!');
+            solicitacaoForm.reset();
+        });
+
+        verRespostasButton.addEventListener('click', function() {
+            window.location.href = 'respostas.html'; // Redireciona para a página de respostas
+        });
+    </script>
+</body>
+</html>
