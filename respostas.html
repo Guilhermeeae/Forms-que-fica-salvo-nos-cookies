@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Respostas Cadastradas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .solicitacao {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+        .solicitacao h3 {
+            margin: 0 0 10px;
+        }
+        .solicitacao p {
+            margin: 5px 0;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Solicitações Cadastradas</h1>
+        <div id="solicitacoesContainer"></div>
+        <button onclick="window.location.href='index.html'">Voltar</button>
+    </div>
+
+    <script>
+        const solicitacoes = JSON.parse(localStorage.getItem('solicitacoes')) || [];
+        const solicitacoesContainer = document.getElementById('solicitacoesContainer');
+
+        if (solicitacoes.length === 0) {
+            solicitacoesContainer.innerHTML = '<p>Nenhuma solicitação cadastrada.</p>';
+        } else {
+            solicitacoes.forEach(solicitacao => {
+                const div = document.createElement('div');
+                div.classList.add('solicitacao');
+                div.innerHTML = `
+                    <h3>${solicitacao.nome} (${solicitacao.cargo})</h3>
+                    <p><strong>Nome da Empresa:</strong> ${solicitacao.empresa}</p>
+                    <p><strong>CNPJ:</strong> ${solicitacao.cnpj}</p>
+                    <p><strong>Setor/Área:</strong> ${solicitacao.setor}</p>
+                    <p><strong>Telefone:</strong> ${solicitacao.telefone}</p>
+                    <p><strong>E-mail:</strong> ${solicitacao.email}</p>
+                    <p><strong>Data da Solicitação:</strong> ${solicitacao.data}</p>
+                    <p><strong>Urgência:</strong> ${solicitacao.urgencia}</p>
+                    <p><strong>Observações:</strong> ${solicitacao.observacoes}</p>
+                    <p><strong>Problema Principal:</strong> ${solicitacao.problema}</p>
+                    <p><strong>Descrição Detalhada:</strong> ${solicitacao.descricao}</p>
+                    <p><strong>Impacto do Problema:</strong> ${solicitacao.impacto}</p>
+                    <p><strong>Outros Problemas:</strong> ${solicitacao.outrosProblemas}</p>
+                    <p><strong>Pergunta Opcional:</strong> ${solicitacao.pergunta}</p>
+                `;
+                solicitacoesContainer.appendChild(div);
+            });
+        }
+    </script>
+</body>
+</html>
